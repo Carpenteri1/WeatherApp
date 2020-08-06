@@ -25,7 +25,11 @@ namespace WeatherApp
                 catch (Exception e)
                 {
                     Console.Clear();
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(ColorAndStyle.SetTextColor("red", e.Message));
+                }
+                finally
+                {
+
                 }
             }
             else if (i.Equals(2))

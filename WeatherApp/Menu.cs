@@ -11,51 +11,54 @@ namespace WeatherApp
     {
         private static bool willContinue = true;
         private static FetchData data = new FetchData();
-    
+        private const int ExitProgram = 6;
 
         public static async Task RunProgram()
         {
             while (willContinue.Equals(true))
             {
-                Console.Write(OutPut.PrintMenuOptions());
-                await MainMenu(Console.ReadLine());
-                Console.Clear();
+                try
+                {
+                    Console.Write(OutPut.PrintMenuOptions());
+                    willContinue = await MainMenu(int.Parse(Console.ReadLine()));
+                    Console.Clear();
+                } 
+                catch (Exception e)
+                {
+                    Console.Clear();
+                    Console.WriteLine(ColorAndStyle.SetTextColor("Red",e.Message));
+                }
+                finally
+                {
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
             }
         }
 
-        private static async Task MainMenu(string userInput)
+        private static async Task<bool> MainMenu(int userInput)
         {
-            string url = string.Empty;
-            string input = string.Empty;
-            Console.Clear();
-            switch (userInput)
+            if (!userInput.Equals(ExitProgram))
             {
-                case "1":
-                    Console.WriteLine(await InPut.InPutString(int.Parse(userInput)));
-                    Console.ReadKey();
-                    break;
-                case "2":
-                    Console.WriteLine(await InPut.InPutString(int.Parse(userInput)));
-                    Console.ReadKey();
-                    break;
-                case "3":
-                    Console.WriteLine(await InPut.InPutString(int.Parse(userInput)));
-                    Console.ReadKey();
-                    break;
-                case "4":
-                    Console.WriteLine(await InPut.InPutString(int.Parse(userInput)));
-                    Console.ReadKey();
-                    break;
-                case "5":
-                    Console.WriteLine(await InPut.InPutString(int.Parse(userInput)));
-                    Console.ReadKey();
-                    break;
-                case "6":
-                    willContinue = false;
-                    break;
-                default:
-                    break;
-            }   
-        }   
+                string url = string.Empty;
+                string input = string.Empty;
+                Console.Clear();
+                Console.WriteLine(await InPut.InPutString(userInput));
+                Console.ReadKey();
+                willContinue = true;
+            }
+            else if (userInput.Equals(null))
+            {
+
+                throw new Exception("Input cant be empty");
+            }
+            else
+            {
+                willContinue = false;
+            }
+
+            return willContinue;
+        }
     }
 }

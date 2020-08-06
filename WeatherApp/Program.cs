@@ -6,6 +6,7 @@ namespace WeatherApp
     {   
         static async Task Main(string[] args)
         {
+            Console.Title = "WeatherApp";
             await Menu.RunProgram();
         }
 

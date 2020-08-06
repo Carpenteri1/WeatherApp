@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using WeatherApp.Data;
@@ -10,21 +12,24 @@ namespace WeatherApp
     {
         public static string PrintMenuOptions()
         {
-            return "Search For City Press 1:" +
-     "\nSearch by lon and lat Press 2:" +
-     "\nCollect multiple city data Press 3:" +
-     "\nFour Days Weather Forecast Press 4:" +
-     "\nDaily Weather Forecast 5:" +
-     "\nClose Program Press 6:" +
-     "\n:> ";
+            string menuText = "Search For City Press 1:" +
+      "\nSearch by lon and lat Press 2:" +
+      "\nCollect multiple city data Press 3:" +
+      "\nFour Days Weather Forecast Press 4:" +
+      "\nDaily Weather Forecast 5:" +
+      "\nClose Program Press 6:" +
+      "\n:> ";
+
+            ColorAndStyle.SetTextColor("Magenta");
+            return menuText;
         }
 
         public static string PrintWeatherCondition(WeatherData weather)
         {
             string data = string.Empty;
-
             if (weather.Equals(null))
             {
+                ColorAndStyle.SetTextColor("Red");
                 data = "input cant be empty!";
             }
             else
