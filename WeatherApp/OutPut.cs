@@ -20,23 +20,22 @@ namespace WeatherApp
       "\nClose Program Press 6:" +
       "\n:> ";
 
-            ColorAndStyle.SetTextColor("Magenta");
+            ColorAndStyle.SetTextColor(Colors.Magenta);
             return menuText;
         }
 
         public static string PrintWeatherCondition(WeatherData weather)
         {
             string data = string.Empty;
-            if (weather.Equals(null))
+            if (!weather.Equals(null))
             {
-                ColorAndStyle.SetTextColor("Red");
-                data = "input cant be empty!";
+                data = $"City: {weather.name}\nTemperature: {weather.main.temp}\nHighest temperature: {weather.main.temp_max}\nLowest temperatur: {weather.main.temp_min}" +
+                            $"\nFeels like: {weather.main.feels_like}\nHumidity: {weather.main.humidity}\nPressure: {weather.main.pressure}\nWindspeed: {weather.Wind.speed}\nDeg: {weather.Wind.deg}" +
+                             $"\nCondition: {weather.weather[0].main}\nDescription: {weather.weather[0].description}";
             }
             else
             {
-                data = $"City: {weather.name}\nTemperature: {weather.main.temp}\nHighest temperature: {weather.main.temp_max}\nLowest temperatur: {weather.main.temp_min}" +
-                        $"\nFeels like: {weather.main.feels_like}\nHumidity: {weather.main.humidity}\nPressure: {weather.main.pressure}\nWindspeed: {weather.Wind.speed}\nDeg: {weather.Wind.deg}" +
-                        $"\nCondition: {weather.weather[0].main}\nDescription: {weather.weather[0].description}";
+                throw new Exception("PrintWeatherCondition cant be empty");
             }
 
             return data;

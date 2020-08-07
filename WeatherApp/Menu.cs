@@ -23,10 +23,15 @@ namespace WeatherApp
                     willContinue = await MainMenu(int.Parse(Console.ReadLine()));
                     Console.Clear();
                 } 
+                catch(FormatException)
+                {
+                    Console.Clear();
+                    Console.WriteLine(ColorAndStyle.SetTextColor(Colors.red, "Input cant be empty!!"));
+                }
                 catch (Exception e)
                 {
                     Console.Clear();
-                    Console.WriteLine(ColorAndStyle.SetTextColor("Red",e.Message));
+                    Console.WriteLine(ColorAndStyle.SetTextColor(Colors.red,e.Message));
                 }
                 finally
                 {
@@ -48,16 +53,10 @@ namespace WeatherApp
                 Console.ReadKey();
                 willContinue = true;
             }
-            else if (userInput.Equals(null))
-            {
-
-                throw new Exception("Input cant be empty");
-            }
             else
             {
                 willContinue = false;
             }
-
             return willContinue;
         }
     }

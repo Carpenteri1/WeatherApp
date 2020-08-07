@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace WeatherApp
 {
     public class ColorAndStyle
     {
-        public static string SetTextColor(string color,string textInput)
+        public static string SetTextColor(Colors color,string textInput)
         {
-            switch (color.ToLower())
+            switch (color.ToString().ToLower())
             {
                 case "green":
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -26,16 +27,16 @@ namespace WeatherApp
             return textInput;
         }
 
-        public static void SetTextColor(string color)
+        public static void SetTextColor(Colors color)
         {
-            switch (color.ToLower())
+            switch (color.ToString().ToLower())
             {
                 case "green":
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
                 case "white":
                     Console.ForegroundColor = ConsoleColor.White;
-                    break; 
+                    break;
                 case "red":
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
@@ -46,9 +47,9 @@ namespace WeatherApp
         }
 
 
-        public static void SetBackgroundColor(string input)
+        public static void SetBackgroundColor(Colors color)
         {
-            switch (input.ToLower())
+            switch (color.ToString().ToLower())
             {
                 case "green":
                     Console.BackgroundColor = ConsoleColor.Green;
@@ -58,6 +59,9 @@ namespace WeatherApp
                     break;
                 case "red":
                     Console.BackgroundColor = ConsoleColor.Red;
+                    break;
+                case "yellow":
+                    Console.BackgroundColor = ConsoleColor.Yellow;
                     break;
             }
         }

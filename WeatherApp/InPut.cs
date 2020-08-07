@@ -9,89 +9,58 @@ namespace WeatherApp
     {
         private static WeatherData weathers;
         private static FetchData data = new FetchData();
+        private const int _SearchForOneCity = 1;
+        private const int _SearchBylongLat = 2;
+        private const int _SearchForMultipleCities = 3;
+        private const int _FourDaysForeCast = 4;
+        private const int _DailyForCast = 5;
 
         public static async Task<string> InPutString(int i)
        {
             string apiResponse = string.Empty;
             string input = string.Empty;
 
-            if (i.Equals(1))
+            if (i.Equals(_SearchForOneCity))
             {
-                try
-                {
                     input = EnterStringValue("Enter city name: ");
                     apiResponse = OutPut.PrintWeatherCondition(await data.GetAPIResponse(input, i));
-                }
-                catch (Exception e)
-                {
-                    Console.Clear();
-                    Console.WriteLine(ColorAndStyle.SetTextColor("red", e.Message));
-                }
-                finally
-                {
-
-                }
             }
-            else if (i.Equals(2))
+            else if (i.Equals(_SearchBylongLat))
             {
-                try
-                {
                     int lon = int.Parse(EnterStringValue("Enter lat value: "));
                     int lat = int.Parse(EnterStringValue("Enter lon value: "));
                     Console.Clear();
                     apiResponse = OutPut.PrintWeatherCondition(await data.GetAPIResponse(lat, lon));
-                }
-                catch (Exception e)
-                {
-                    Console.Clear();
-                    Console.WriteLine(e.Message);
-                }
-
             }
-            else if (i.Equals(3))//TODO fix catch exception here
+            else if (i.Equals(_SearchForMultipleCities))
             {
                     foreach (var s in await AddCityNames(i))
                     {
                         apiResponse += "\n" + OutPut.PrintWeatherCondition(s) + "\n--------------";
                     }
             }
-            else if (i.Equals(4))
+            else if (i.Equals(_FourDaysForeCast))
             {
-                try
-                {
                     apiResponse = OutPut.PrintFourDaysForecast(await data.GetAPIResponse(EnterStringValue("Enter city name: "), i));
-                }
-                catch(Exception e)
-                {
-                    Console.Clear();
-                    Console.WriteLine(e.Message);
-                }
-               
             }
-            else if (i.Equals(5))
+            else if (i.Equals(_DailyForCast))
             {
-                try
-                {
-                    apiResponse = OutPut.PrintDailyForecast(await data.GetAPIResponse(EnterStringValue("Enter city name: "), i));
-                }
-                catch(Exception e)
-                {
-                    Console.Clear();
-                    Console.WriteLine(e.Message);
-                }
+                 apiResponse = OutPut.PrintDailyForecast(await data.GetAPIResponse(EnterStringValue("Enter city name: "), i));
             }
+
             return apiResponse;
        }
 
         private static string EnterStringValue(string output)
         {
             Console.Write(output);
-            string value = Console.ReadLine();
+            string value = string.Empty;
+            value = Console.ReadLine();
+
             if (value.Equals(string.Empty))
             {
-                throw new Exception("Input cant be empty");
+                throw new Exception("Input cant be empty!");
             }
-
             return value;
         }
 
@@ -107,7 +76,9 @@ namespace WeatherApp
                 #region menu prompts
                 if (listOfWeatherData.Count < 1)
                 {
-                    Console.Write("Type nothing and press enter to exit and continue\nEnter city name: ");
+                    ColorAndStyle.SetTextColor(Colors.red);
+                    Console.Write(ColorAndStyle.SetTextColor(Colors.red, "Type nothing and press enter to exit and continue"));
+                    Console.WriteLine(ColorAndStyle.SetTextColor(Colors.white, "\nEnter city name: "));
                     input = Console.ReadLine();
                 }
                 else
@@ -125,9 +96,7 @@ namespace WeatherApp
                 }
                 else if (listOfWeatherData.Count < 1 && input.Equals(string.Empty))
                 {
-                    Console.Clear();
-                    Console.WriteLine("Input cant be empty");
-                    continueLoop = false;
+                    throw new Exception("first input cant be empty!!");
                 }
                 else
                 {
